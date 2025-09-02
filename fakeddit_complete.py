@@ -64,7 +64,7 @@ os.makedirs("data/subset/images", exist_ok=True)
 os.makedirs("results", exist_ok=True)
 os.makedirs("runs", exist_ok=True)
 
-print("✅ Environment setup complete!")
+print(" Environment setup complete!")
 print(f"PyTorch version: {torch.__version__}")
 print(f"Device available: {'CUDA' if torch.cuda.is_available() else 'CPU'}")
 
@@ -74,7 +74,7 @@ print(f"Device available: {'CUDA' if torch.cuda.is_available() else 'CPU'}")
 
 def download_fakeddit_dataset():
     """Download Fakeddit dataset files if they don't exist"""
-    print("📥 Checking and downloading Fakeddit dataset...")
+    print(" Checking and downloading Fakeddit dataset...")
     
     # Dataset URLs
     dataset_urls = {
@@ -88,7 +88,7 @@ def download_fakeddit_dataset():
         filepath = os.path.join("data", filename)
         
         if os.path.exists(filepath):
-            print(f"✅ {filename} already exists")
+            print(f" {filename} already exists")
             continue
             
         print(f"📥 Downloading {filename}...")
@@ -99,20 +99,20 @@ def download_fakeddit_dataset():
             if response.status_code == 200:
                 with open(filepath, 'wb') as f:
                     f.write(response.content)
-                print(f"✅ {filename} downloaded successfully")
+                print(f" {filename} downloaded successfully")
             else:
-                print(f"❌ Failed to download {filename}: HTTP {response.status_code}")
+                print(f" Failed to download {filename}: HTTP {response.status_code}")
                 
         except Exception as e:
-            print(f"❌ Error downloading {filename}: {e}")
-            print(f"💡 You can manually download from: {url}")
+            print(f" Error downloading {filename}: {e}")
+            print(f" You can manually download from: {url}")
     
     # Verify all files exist
     all_exist = all(os.path.exists(os.path.join("data", filename)) for filename in dataset_urls.keys())
     if all_exist:
-        print("✅ All dataset files are available!")
+        print(" All dataset files are available!")
     else:
-        print("❌ Some dataset files are missing. Please check the downloads.")
+        print(" Some dataset files are missing. Please check the downloads.")
         return False
     
     return True
@@ -123,21 +123,21 @@ def download_fakeddit_dataset():
 
 def load_fakeddit_data():
     """Load and preprocess Fakeddit multimodal dataset"""
-    print("📊 Loading Fakeddit dataset...")
+    print(" Loading Fakeddit dataset...")
     
     # Load multimodal TSV files
     train_df = pd.read_csv("data/multimodal_train.tsv", sep="\t")
     val_df = pd.read_csv("data/multimodal_validate.tsv", sep="\t")
     test_df = pd.read_csv("data/multimodal_test_public.tsv", sep="\t")
     
-    print(f"✅ Dataset loaded:")
+    print(f" Dataset loaded:")
     print(f"  Train: {train_df.shape[0]:,} samples")
     print(f"  Validation: {val_df.shape[0]:,} samples") 
     print(f"  Test: {test_df.shape[0]:,} samples")
     print(f"  Features: {train_df.shape[1]} columns")
     
     # Check label distribution
-    print(f"\n📈 Label distribution (6-way):")
+    print(f"\n Label distribution (6-way):")
     for df_name, df in [("Train", train_df), ("Val", val_df), ("Test", test_df)]:
         label_counts = df['6_way_label'].value_counts().sort_index()
         print(f"  {df_name}: {dict(label_counts)}")
@@ -146,7 +146,7 @@ def load_fakeddit_data():
 
 def create_data_subsets(train_df, val_df, test_df, train_size=5000, val_size=1000, test_size=1000):
     """Create manageable subsets for training"""
-    print(f"\n🔄 Creating data subsets...")
+    print(f"\n Creating data subsets...")
     
     # Create subsets
     train_subset = train_df.sample(train_size, random_state=42)
@@ -158,7 +158,7 @@ def create_data_subsets(train_df, val_df, test_df, train_size=5000, val_size=100
     val_subset.to_csv("data/subset/val_subset.csv", index=False)
     test_subset.to_csv("data/subset/test_subset.csv", index=False)
     
-    print(f"✅ Subsets created and saved:")
+    print(f" Subsets created and saved:")
     print(f"  Train subset: {len(train_subset):,} samples")
     print(f"  Val subset: {len(val_subset):,} samples")
     print(f"  Test subset: {len(test_subset):,} samples")
@@ -171,7 +171,7 @@ def create_data_subsets(train_df, val_df, test_df, train_size=5000, val_size=100
 
 def build_vocabulary(texts, min_freq=2, max_vocab_size=10000):
     """Build vocabulary from text data with size limit"""
-    print("🔤 Building vocabulary...")
+    print(" Building vocabulary...")
     
     word2idx = {}
     word2idx["<pad>"] = 0  # 0 reserved for padding
@@ -191,7 +191,7 @@ def build_vocabulary(texts, min_freq=2, max_vocab_size=10000):
             word2idx[word] = idx
             idx += 1
     
-    print(f"✅ Vocabulary built: {len(word2idx):,} unique words")
+    print(f" Vocabulary built: {len(word2idx):,} unique words")
     print(f"  (min frequency: {min_freq}, max vocab size: {max_vocab_size})")
     
     return word2idx
@@ -220,7 +220,7 @@ def create_tokenizer(word2idx, max_len=120):
 
 def download_sample_images(df, num_samples=1000, output_dir="data/subset/images"):
     """Download sample images for training"""
-    print(f"🖼️ Downloading {num_samples} sample images...")
+    print(f" Downloading {num_samples} sample images...")
     
     # Create class directories
     for class_label in range(6):
@@ -260,12 +260,12 @@ def download_sample_images(df, num_samples=1000, output_dir="data/subset/images"
         except Exception as e:
             failed_count += 1
     
-    print(f"✅ Image download complete:")
+    print(f" Image download complete:")
     print(f"  Downloaded: {downloaded_count}")
     print(f"  Failed: {failed_count}")
     
     # Check final distribution
-    print(f"\n📊 Final image distribution:")
+    print(f"\n Final image distribution:")
     for class_label in range(6):
         class_dir = os.path.join(output_dir, str(class_label))
         if os.path.exists(class_dir):
@@ -332,7 +332,7 @@ class MultimodalDataset(Dataset):
 
 def create_dataloaders(tokenizer, batch_size=32):
     """Create train, validation, and test dataloaders"""
-    print("🔄 Creating dataloaders...")
+    print(" Creating dataloaders...")
     
     # Image transformations
     transform = transforms.Compose([
@@ -371,7 +371,7 @@ def create_dataloaders(tokenizer, batch_size=32):
     val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=0)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=0)
     
-    print(f"✅ Dataloaders created:")
+    print(f" Dataloaders created:")
     print(f"  Train: {len(train_dataset)} samples")
     print(f"  Validation: {len(val_dataset)} samples")
     print(f"  Test: {len(test_dataset)} samples")
@@ -552,7 +552,7 @@ class ImageOnlyModel(nn.Module):
 
 def train_baseline_model(model, train_loader, val_loader, model_name, num_epochs=5, learning_rate=1e-3):
     """Train baseline models (text-only or image-only)"""
-    print(f"🚀 Training {model_name} baseline...")
+    print(f" Training {model_name} baseline...")
     
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = model.to(device)
@@ -636,7 +636,7 @@ def train_baseline_model(model, train_loader, val_loader, model_name, num_epochs
         if avg_val_loss < best_val_loss:
             best_val_loss = avg_val_loss
             torch.save(model.state_dict(), f'results/{model_name.lower().replace("-", "_")}_best_model.pth')
-            print(f"  ✅ New best model saved!")
+            print(f"   New best model saved!")
     
     return model, train_losses, val_losses, train_accs, val_accs
 
@@ -703,7 +703,7 @@ def validate_epoch(model, val_loader, criterion, device):
 
 def train_model(model, train_loader, val_loader, device, num_epochs=10, learning_rate=1e-3):
     """Complete training pipeline"""
-    print(f"🚀 Starting training for {num_epochs} epochs...")
+    print(f" Starting training for {num_epochs} epochs...")
 
     # Setup training components
     criterion = nn.CrossEntropyLoss()
@@ -719,7 +719,7 @@ def train_model(model, train_loader, val_loader, device, num_epochs=10, learning
     train_accs, val_accs = [], []
     best_val_loss = float('inf')
 
-    print(f"📊 Training configuration:")
+    print(f" Training configuration:")
     print(f"  Epochs: {num_epochs}")
     print(f"  Learning rate: {learning_rate}")
     print(f"  Device: {device}")
@@ -772,7 +772,7 @@ def train_model(model, train_loader, val_loader, device, num_epochs=10, learning
                 'train_accs': train_accs,
                 'val_accs': val_accs
             }, os.path.join(log_dir, 'best_model.pth'))
-            print(f"  ✅ New best model saved! (Val Loss: {best_val_loss:.4f})")
+            print(f"   New best model saved! (Val Loss: {best_val_loss:.4f})")
 
         print("-" * 60)
 
@@ -793,11 +793,11 @@ def train_model(model, train_loader, val_loader, device, num_epochs=10, learning
 
     writer.close()
 
-    print(f"\n🎉 Training completed!")
+    print(f"\n Training completed!")
     print(f"Best validation loss: {best_val_loss:.4f}")
     print(f"Best validation accuracy: {max(val_accs):.2f}%")
     print(f"Final validation accuracy: {val_accs[-1]:.2f}%")
-    print(f"📁 All files saved to: {log_dir}")
+    print(f" All files saved to: {log_dir}")
 
     return train_losses, val_losses, train_accs, val_accs, log_dir
 
@@ -807,7 +807,7 @@ def train_model(model, train_loader, val_loader, device, num_epochs=10, learning
 
 def evaluate_model_comprehensive(model, test_loader, model_name, device):
     """Comprehensive evaluation of a model"""
-    print(f"📊 Evaluating {model_name}...")
+    print(f" Evaluating {model_name}...")
     
     model.eval()
     all_predictions = []
@@ -890,7 +890,7 @@ def calculate_detailed_metrics(y_true, y_pred, y_prob, model_name):
 
 def evaluate_model(model, test_loader, device):
     """Comprehensive model evaluation"""
-    print("📊 Evaluating model on test set...")
+    print(" Evaluating model on test set...")
     
     model.eval()
     all_predictions = []
@@ -957,7 +957,7 @@ def plot_confusion_matrix(y_true, y_pred, class_names):
 
 def generate_evaluation_report(y_true, y_pred, y_prob, class_names):
     """Generate comprehensive evaluation report"""
-    print("📋 COMPREHENSIVE EVALUATION REPORT")
+    print(" COMPREHENSIVE EVALUATION REPORT")
     print("=" * 60)
     
     # Overall metrics
@@ -965,11 +965,11 @@ def generate_evaluation_report(y_true, y_pred, y_prob, class_names):
     print(f"Overall Accuracy: {overall_accuracy:.4f}")
     
     # Classification report
-    print("\n📊 Detailed Classification Report:")
+    print("\n Detailed Classification Report:")
     print(classification_report(y_true, y_pred, target_names=class_names, digits=4))
     
     # Confusion matrix
-    print("\n🔢 Confusion Matrix:")
+    print("\n Confusion Matrix:")
     cm = plot_confusion_matrix(y_true, y_pred, class_names)
     
     # Save results
@@ -982,7 +982,7 @@ def generate_evaluation_report(y_true, y_pred, y_prob, class_names):
     with open('results/evaluation_results.json', 'w') as f:
         json.dump(results, f, indent=2)
     
-    print(f"\n💾 Results saved to 'results/evaluation_results.json'")
+    print(f"\n Results saved to 'results/evaluation_results.json'")
     
     return results
 
@@ -1132,14 +1132,14 @@ def generate_comparative_report(results):
     best_accuracy_idx = np.argmax([r['accuracy'] for r in results])
     best_f1_idx = np.argmax([r['weighted_f1'] for r in results])
     
-    print(f"\n🏆 BEST PERFORMING MODELS:")
+    print(f"\n BEST PERFORMING MODELS:")
     print(f"  Highest Accuracy: {results[best_accuracy_idx]['model_name']} ({results[best_accuracy_idx]['accuracy']:.4f})")
     print(f"  Highest F1-Score: {results[best_f1_idx]['model_name']} ({results[best_f1_idx]['weighted_f1']:.4f})")
     
     # Multimodal vs Single-modality analysis
     multimodal_result = next((r for r in results if r['model_name'] == 'Multimodal'), None)
     if multimodal_result:
-        print(f"\n🔍 MULTIMODAL VS SINGLE-MODALITY ANALYSIS:")
+        print(f"\n MULTIMODAL VS SINGLE-MODALITY ANALYSIS:")
         for result in results:
             if result['model_name'] != 'Multimodal':
                 acc_improvement = multimodal_result['accuracy'] - result['accuracy']
@@ -1149,7 +1149,7 @@ def generate_comparative_report(results):
                 print(f"    F1-Score: {f1_improvement:+.4f} ({f1_improvement/result['weighted_f1']*100:+.1f}%)")
     
     # Per-class analysis
-    print(f"\n📈 PER-CLASS PERFORMANCE ANALYSIS:")
+    print(f"\n PER-CLASS PERFORMANCE ANALYSIS:")
     for i in range(6):
         print(f"\n  Class {i}:")
         for result in results:
@@ -1221,7 +1221,7 @@ def generate_comparative_report(results):
     with open('results/comprehensive_comparative_analysis.json', 'w') as f:
         json.dump(detailed_results, f, indent=2)
     
-    print(f"\n💾 Detailed results saved to 'results/comprehensive_comparative_analysis.json'")
+    print(f"\n Detailed results saved to 'results/comprehensive_comparative_analysis.json'")
     
     return detailed_results
 
@@ -1231,7 +1231,7 @@ def generate_comparative_report(results):
 
 def launch_tensorboard(logdir="runs", port=6006):
     """Launch TensorBoard after ensuring the port is free"""
-    print(f"🚀 Preparing to launch TensorBoard on port {port}...")
+    print(f" Preparing to launch TensorBoard on port {port}...")
     
     try:
         import subprocess
@@ -1251,7 +1251,7 @@ def launch_tensorboard(logdir="runs", port=6006):
                         pids.add(pid)
                 for pid in pids:
                     if pid.isdigit():
-                        print(f"🔪 Killing process on port {port} (PID: {pid})")
+                        print(f" Killing process on port {port} (PID: {pid})")
                         subprocess.run(f'taskkill /PID {pid} /F', shell=True)
             except subprocess.CalledProcessError:
                 pass
@@ -1267,7 +1267,7 @@ def launch_tensorboard(logdir="runs", port=6006):
                         pids.add(pid)
                 for pid in pids:
                     if pid.isdigit():
-                        print(f"🔪 Killing process on port {port} (PID: {pid})")
+                        print(f" Killing process on port {port} (PID: {pid})")
                         subprocess.run(['kill', '-9', pid])
             except subprocess.CalledProcessError:
                 pass
@@ -1276,24 +1276,24 @@ def launch_tensorboard(logdir="runs", port=6006):
         
         # Find the most recent training run
         if not os.path.exists(logdir):
-            print(f"❌ Runs directory not found: {logdir}")
+            print(f" Runs directory not found: {logdir}")
             return
         
         training_runs = [d for d in os.listdir(logdir) if d.startswith('multimodal_training_')]
         if not training_runs:
-            print(f"❌ No training runs found in {logdir}")
+            print(f" No training runs found in {logdir}")
             return
         
         latest_run = sorted(training_runs)[-1]
         log_dir = os.path.join(logdir, latest_run)
-        print(f"📁 Found training logs: {log_dir}")
+        print(f" Found training logs: {log_dir}")
         
         tb_files = [f for f in os.listdir(log_dir) if f.startswith('events.out.tfevents')]
         if not tb_files:
-            print(f"❌ No TensorBoard files found in {log_dir}")
+            print(f" No TensorBoard files found in {log_dir}")
             return
         
-        print(f"✅ TensorBoard files found: {len(tb_files)} files")
+        print(f" TensorBoard files found: {len(tb_files)} files")
         
         # Launch TensorBoard
         try:
@@ -1301,15 +1301,15 @@ def launch_tensorboard(logdir="runs", port=6006):
             tb = program.TensorBoard()
             tb.configure(argv=[None, '--logdir', logdir, '--port', str(port)])
             url = tb.launch()
-            print(f"🌐 TensorBoard launched at: {url}")
-            print(f"💡 You can view training progress at: {url}")
+            print(f" TensorBoard launched at: {url}")
+            print(f" You can view training progress at: {url}")
         except Exception as e:
-            print(f"❌ Error launching TensorBoard: {e}")
-            print(f"💡 Manual command: tensorboard --logdir={logdir} --port={port}")
+            print(f" Error launching TensorBoard: {e}")
+            print(f" Manual command: tensorboard --logdir={logdir} --port={port}")
             
     except Exception as e:
-        print(f"⚠️ Could not launch TensorBoard: {e}")
-        print(f"💡 You can manually run: tensorboard --logdir={logdir} --port={port}")
+        print(f" Could not launch TensorBoard: {e}")
+        print(f" You can manually run: tensorboard --logdir={logdir} --port={port}")
 
 # =============================================================================
 # 12. MAIN EXECUTION
@@ -1317,12 +1317,12 @@ def launch_tensorboard(logdir="runs", port=6006):
 
 def main():
     """Main execution function with comprehensive analysis"""
-    print("🚀 Starting Fakeddit Multimodal Fake News Detection Pipeline")
+    print(" Starting Fakeddit Multimodal Fake News Detection Pipeline")
     print("=" * 80)
     
     # Download dataset if needed
     if not download_fakeddit_dataset():
-        print("❌ Dataset download failed. Please check your internet connection and try again.")
+        print(" Dataset download failed. Please check your internet connection and try again.")
         return
     
     # Load and preprocess data
@@ -1334,7 +1334,7 @@ def main():
     word2idx = build_vocabulary(all_texts, min_freq=2)
     tokenizer = create_tokenizer(word2idx, max_len=120)
     
-    print(f"\n📝 Tokenizer created:")
+    print(f"\n Tokenizer created:")
     print(f"  Vocabulary size: {len(word2idx):,}")
     print(f"  Max sequence length: 120")
     
@@ -1350,7 +1350,7 @@ def main():
     # =============================================================================
     # TRAIN SINGLE-MODALITY BASELINE MODELS
     # =============================================================================
-    print("\n🏗️ Training single-modality baseline models...")
+    print("\n Training single-modality baseline models...")
     
     # Text-only baseline
     text_model = TextOnlyModel(vocab_size=len(word2idx), embed_dim=128, hidden_dim=128, num_classes=6)
@@ -1364,12 +1364,12 @@ def main():
         image_model, train_loader, val_loader, "Image-Only", num_epochs=5
     )
     
-    print("✅ Baseline models trained successfully!")
+    print(" Baseline models trained successfully!")
     
     # =============================================================================
     # TRAIN MULTIMODAL MODEL
     # =============================================================================
-    print("\n🚀 Training multimodal diffusion model...")
+    print("\n Training multimodal diffusion model...")
     
     # Initialize multimodal model
     multimodal_model = MultimodalDiffusionModel(
@@ -1380,7 +1380,7 @@ def main():
         use_diffusion=True
     ).to(device)
     
-    print(f"✅ Multimodal model created and moved to {device}")
+    print(f" Multimodal model created and moved to {device}")
     print(f"Model parameters: {sum(p.numel() for p in multimodal_model.parameters()):,}")
     
     # Train multimodal model
@@ -1388,12 +1388,12 @@ def main():
         multimodal_model, train_loader, val_loader, device, num_epochs=5, learning_rate=1e-3
     )
     
-    print("✅ Multimodal model trained successfully!")
+    print(" Multimodal model trained successfully!")
     
     # =============================================================================
     # COMPREHENSIVE EVALUATION AND COMPARATIVE ANALYSIS
     # =============================================================================
-    print("\n🔍 Starting comprehensive evaluation of all models...")
+    print("\n Starting comprehensive evaluation of all models...")
     
     # Evaluate each model
     text_pred, text_true, text_prob = evaluate_model_comprehensive(text_model, test_loader, "Text-Only", device)
@@ -1422,13 +1422,13 @@ def main():
     # =============================================================================
     # TENSORBOARD INTEGRATION
     # =============================================================================
-    print("\n🌐 Launching TensorBoard for training visualization...")
+    print("\n Launching TensorBoard for training visualization...")
     launch_tensorboard()
     
     # =============================================================================
     # FINAL SUMMARY
     # =============================================================================
-    print("\n🎯 FINAL COMPREHENSIVE SUMMARY")
+    print("\n FINAL COMPREHENSIVE SUMMARY")
     print("=" * 80)
     
     # Extract final metrics
@@ -1436,7 +1436,7 @@ def main():
     img_final_acc = img_val_accs[-1] if img_val_accs else 0
     multi_final_acc = multi_val_accs[-1] if multi_val_accs else 0
     
-    print(f"\n📊 FINAL VALIDATION ACCURACIES:")
+    print(f"\n FINAL VALIDATION ACCURACIES:")
     print(f"  Text-Only Model:     {text_final_acc:.2f}%")
     print(f"  Image-Only Model:    {img_final_acc:.2f}%")
     print(f"  Multimodal Model:    {multi_final_acc:.2f}%")
@@ -1450,23 +1450,23 @@ def main():
         img_improvement = multi_final_acc - img_final_acc
         print(f"  Multimodal vs Image: +{img_improvement:.2f}% improvement")
     
-    print(f"\n🏆 KEY FINDINGS:")
+    print(f"\n KEY FINDINGS:")
     print(f"  • Multimodal fusion demonstrates {'superior' if multi_final_acc > max(text_final_acc, img_final_acc) else 'comparable'} performance")
     print(f"  • Text modality provides strong baseline for content analysis")
     print(f"  • Image modality contributes to visual manipulation detection")
     print(f"  • Diffusion layers enhance feature quality and model robustness")
     
-    print(f"\n📁 GENERATED OUTPUTS:")
+    print(f"\n GENERATED OUTPUTS:")
     print(f"  • results/comprehensive_model_comparison.png - Visual comparison charts")
     print(f"  • results/training_curves_comparison.png - Training progress visualization")
     print(f"  • results/comprehensive_comparative_analysis.json - Detailed metrics")
     print(f"  • results/*_best_model.pth - Trained model weights")
     print(f"  • runs/multimodal_training_*/ - TensorBoard logs")
     
-    print("\n✅ COMPLETE PIPELINE EXECUTED SUCCESSFULLY!")
-    print("🎉 All models trained, evaluated, and compared comprehensively!")
-    print(f"📁 All results saved to 'results/' directory")
-    print(f"📊 TensorBoard logs available in '{log_dir}'")
+    print("\n COMPLETE PIPELINE EXECUTED SUCCESSFULLY!")
+    print(" All models trained, evaluated, and compared comprehensively!")
+    print(f" All results saved to 'results/' directory")
+    print(f" TensorBoard logs available in '{log_dir}'")
 
 if __name__ == "__main__":
     main()
