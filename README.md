@@ -140,20 +140,6 @@ wget https://github.com/entitize/Fakeddit/raw/master/multimodal_train.tsv -O dat
 wget https://github.com/entitize/Fakeddit/raw/master/multimodal_validate.tsv -O data/multimodal_validate.tsv
 wget https://github.com/entitize/Fakeddit/raw/master/multimodal_test_public.tsv -O data/multimodal_test_public.tsv
 ```
-#### Step 2: Download Images
-```bash
-# Create images directory
-mkdir -p data/images
-
-# Download images (this may take several hours)
-python download_images.py
-```
-
-#### Step 3: Create Subset Datasets
-```bash
-# Create smaller subsets for faster experimentation
-python create_subsets.py
-```
 
 ### Dataset Structure
 ```
@@ -161,13 +147,6 @@ data/
 ├── multimodal_train.tsv          # Training data (564K samples)
 ├── multimodal_validate.tsv       # Validation data (59K samples)
 ├── multimodal_test_public.tsv    # Test data (59K samples)
-├── images/                       # Downloaded images
-│   ├── 0/                       # Class 0 images
-│   ├── 1/                       # Class 1 images
-│   ├── 2/                       # Class 2 images
-│   ├── 3/                       # Class 3 images
-│   ├── 4/                       # Class 4 images
-│   └── 5/                       # Class 5 images
 └── subset/                      # Subset datasets
     ├── train_subset.csv
     ├── val_subset.csv
