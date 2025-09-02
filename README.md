@@ -428,7 +428,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ##  Support
 
 - **Discussions**: (https://github.com/progga-barua/Fakeddit-Dataset-Evaluation.git)
-- **Email**: proggaabontibarua@gmail.com@gmail.com
+- **Email**: proggaabontibarua@gmail.com
 
 ---
 
@@ -438,7 +438,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ```bash
 # 1. Clone and setup
-git clone https://github.com/yourusername/fakeddit-multimodal.git
+git clone https://github.com/progga-barua/fakeddit-multimodal.git
 cd fakeddit-multimodal
 python -m venv fakeddit_env
 source fakeddit_env/bin/activate  # or fakeddit_env\Scripts\activate on Windows
