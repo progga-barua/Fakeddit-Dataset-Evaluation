@@ -102,7 +102,18 @@ python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
 
 ## Dataset Setup
 
-### Option 1: Automatic Dataset Download (Recommended)
+### Option 1: Manual Download (Recommended)
+
+Please download the Fakeddit dataset from Github:
+https://github.com/entitize/Fakeddit?tab=readme-ov-file
+or
+https://drive.google.com/drive/folders/1DuH0YaEox08ZwzZDpRMOaFpMCeRyxiEF
+Place the following files inside the `data/` folder:
+- multimodal_train.tsv
+- multimodal_validate.tsv
+- multimodal_test_public.tsv
+
+### Option 2: Automatic Dataset Download
 
 The project includes an automatic dataset downloader that handles everything:
 
@@ -117,7 +128,7 @@ This script will:
 - Download and organize images
 - Generate subset datasets for faster experimentation
 
-### Option 2: Manual Dataset Setup
+### Option 3: Manual Dataset Setup
 
 #### Step 1: Download Dataset Files
 ```bash
@@ -129,15 +140,6 @@ wget https://github.com/entitize/Fakeddit/raw/master/multimodal_train.tsv -O dat
 wget https://github.com/entitize/Fakeddit/raw/master/multimodal_validate.tsv -O data/multimodal_validate.tsv
 wget https://github.com/entitize/Fakeddit/raw/master/multimodal_test_public.tsv -O data/multimodal_test_public.tsv
 ```
-### Option 3: Manual Download
-Please download the Fakeddit dataset from Github:
-https://github.com/entitize/Fakeddit?tab=readme-ov-file
-or
-https://drive.google.com/drive/folders/1DuH0YaEox08ZwzZDpRMOaFpMCeRyxiEF
-Place the following files inside the `data/` folder:
-- multimodal_train.tsv
-- multimodal_validate.tsv
-- multimodal_test_public.tsv
 #### Step 2: Download Images
 ```bash
 # Create images directory
