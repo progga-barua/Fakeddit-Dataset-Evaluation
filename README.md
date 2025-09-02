@@ -417,18 +417,6 @@ black src/
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Citation
-
-If you use this work in your research, please cite:
-
-```bibtex
-@article{ahmed2024multimodal,
-  title={Multimodal Fake News Detection Using Diffusion-Enhanced Feature Fusion: A Comprehensive Analysis of Text and Image Modalities},
-  author={Ahmed, Ashik},
-  journal={IEEE Conference Proceedings},
-  year={2024}
-}
-```
 
 ## Acknowledgments
 
@@ -439,9 +427,8 @@ If you use this work in your research, please cite:
 
 ##  Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/fakeddit-multimodal/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/fakeddit-multimodal/discussions)
-- **Email**: ashik.ahmed@email.com
+- **Discussions**: (https://github.com/progga-barua/Fakeddit-Dataset-Evaluation.git)
+- **Email**: proggaabontibarua@gmail.com@gmail.com
 
 ---
 
