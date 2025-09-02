@@ -91,7 +91,7 @@ def download_fakeddit_dataset():
             print(f" {filename} already exists")
             continue
             
-        print(f"📥 Downloading {filename}...")
+        print(f" Downloading {filename}...")
         try:
             headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
             response = requests.get(url, headers=headers, timeout=30)
@@ -1125,7 +1125,7 @@ def generate_comparative_report(results):
         })
     
     comparison_df = pd.DataFrame(comparison_data)
-    print("\n📊 OVERALL PERFORMANCE COMPARISON:")
+    print("\n OVERALL PERFORMANCE COMPARISON:")
     print(comparison_df.to_string(index=False))
     
     # Find best performing model
