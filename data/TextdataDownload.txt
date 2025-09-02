@@ -1,7 +1,8 @@
 ## Dataset Setup
 Please download the Fakeddit dataset from Kaggle:
 https://github.com/entitize/Fakeddit?tab=readme-ov-file
-
+or
+https://drive.google.com/drive/folders/1DuH0YaEox08ZwzZDpRMOaFpMCeRyxiEF
 Place the following files inside the `data/` folder:
 - multimodal_train.tsv
 - multimodal_validate.tsv
