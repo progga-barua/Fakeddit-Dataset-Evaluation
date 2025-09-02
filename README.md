@@ -129,7 +129,15 @@ wget https://github.com/entitize/Fakeddit/raw/master/multimodal_train.tsv -O dat
 wget https://github.com/entitize/Fakeddit/raw/master/multimodal_validate.tsv -O data/multimodal_validate.tsv
 wget https://github.com/entitize/Fakeddit/raw/master/multimodal_test_public.tsv -O data/multimodal_test_public.tsv
 ```
-
+### Option 3: Manual Download
+Please download the Fakeddit dataset from Github:
+https://github.com/entitize/Fakeddit?tab=readme-ov-file
+or
+https://drive.google.com/drive/folders/1DuH0YaEox08ZwzZDpRMOaFpMCeRyxiEF
+Place the following files inside the `data/` folder:
+- multimodal_train.tsv
+- multimodal_validate.tsv
+- multimodal_test_public.tsv
 #### Step 2: Download Images
 ```bash
 # Create images directory
