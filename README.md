@@ -12,8 +12,6 @@ A comprehensive multimodal approach for fake news detection using the Fakeddit d
 - [Model Architectures](#model-architectures)
 - [Results](#results)
 - [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
 
 ##  Overview
 
