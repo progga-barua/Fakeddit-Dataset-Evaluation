@@ -270,19 +270,22 @@ Classifier: MLP (128 → 64 → 6)
 
 ### Performance Comparison
 
-| Model | Accuracy | Macro P | Macro R | Macro F1 | Weighted P | Weighted R | Weighted F1 |
-|-------|----------|---------|---------|----------|------------|------------|-------------|
-| Text-Only | 60.90% | 46.41% | 38.10% | 39.16% | 59.26% | 60.90% | 58.31% |
-| Image-Only | 65.10% | 23.44% | 31.12% | 26.41% | 47.67% | 65.10% | 54.36% |
-| **Multimodal** | **64.10%** | **41.50%** | **42.62%** | **41.78%** | **63.73%** | **64.10%** | **63.74%** |
+| Model | Accuracy | Macro F1 | Weighted F1 | Precision | Recall |
+|-------|----------|----------|-------------|-----------|--------|
+| **Text-Only** | 0.200 | 0.056 | 0.067 | 0.040 | 0.200 |
+| **Image-Only** | 0.200 | 0.163 | 0.204 | 0.269 | 0.200 |
+| **Multimodal** | 0.200 | 0.165 | 0.189 | 0.229 | 0.200 |
 
 ### Per-Class F1-Score Performance
 
-| Model | Class 0 | Class 1 | Class 2 | Class 3 | Class 4 | Class 5 |
-|-------|---------|---------|---------|---------|---------|---------|
-| Text-Only | 71.6% | 18.0% | 32.8% | 13.8% | 71.7% | 31.5% |
-| Image-Only | 69.2% | 0.0% | 0.0% | 0.0% | 89.3% | 0.0% |
-| **Multimodal** | **71.8%** | **18.6%** | **38.9%** | **4.4%** | **85.7%** | **31.5%** |
+| Class | Text-Only | Image-Only | Multimodal | Description |
+|-------|-----------|------------|------------|-------------|
+| 0 | 0.000 | 0.000 | 0.154 | True content |
+| 1 | 0.333 | 0.105 | 0.000 | Satire |
+| 2 | 0.000 | 0.000 | 0.000 | False connection |
+| 3 | 0.000 | 0.146 | 0.188 | Manipulated content |
+| 4 | 0.000 | 0.455 | 0.364 | Misleading content |
+| 5 | 0.000 | 0.273 | 0.286 | Imposter content |
 
 ### Key Findings
 - **Multimodal fusion** provides the most balanced performance across all classes
