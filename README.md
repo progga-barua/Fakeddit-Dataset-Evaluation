@@ -389,17 +389,6 @@ tensorboard --logdir=runs --port=6006
 - **Latent Space**: t-SNE and UMAP visualizations
 - **Performance Comparison**: Model comparison charts
 
-##  Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. **Fork the repository**
-2. **Create a feature branch**: `git checkout -b feature-name`
-3. **Make your changes** and test thoroughly
-4. **Commit your changes**: `git commit -m "Add feature"`
-5. **Push to the branch**: `git push origin feature-name`
-6. **Submit a pull request**
-
 ### Development Setup
 ```bash
 # Install development dependencies
@@ -412,27 +401,6 @@ python -m pytest tests/
 flake8 src/
 black src/
 ```
-
-##  License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-
-## Acknowledgments
-
-- **Fakeddit Dataset**: [entitize/Fakeddit](https://github.com/entitize/Fakeddit)
-- **PyTorch Team**: For the excellent deep learning framework
-- **Transformers Library**: For pre-trained models and utilities
-- **Research Community**: For inspiration and collaboration
-
-##  Support
-
-- **Discussions**: (https://github.com/progga-barua/Fakeddit-Dataset-Evaluation.git)
-- **Email**: proggaabontibarua@gmail.com
-
----
-
-**⭐ If you found this project helpful, please give it a star!**
 
 ##  Quick Start Commands
 
